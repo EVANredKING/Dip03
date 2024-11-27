@@ -1,0 +1,76 @@
+<!-- accounts/templates/accounts/register.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body.dark-mode {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .card.dark-mode {
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .btn {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Регистрация</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_username">Имя пользователя</label>
+                                <input type="text" name="username" class="form-control" id="id_username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_email">Email</label>
+                                <input type="email" name="email" class="form-control" id="id_email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_password1">Пароль</label>
+                                <input type="password" name="password1" class="form-control" id="id_password1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_password2">Подтвердите пароль</label>
+                                <input type="password" name="password2" class="form-control" id="id_password2" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="theme-toggle" class="btn btn-primary" style="position: fixed; top: 10px; right: 10px;">Переключить тему</button>
+    <script>
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelectorAll('.card').forEach(function(element) {
+                element.classList.toggle('dark-mode');
+            });
+        });
+    </script>
+</body>
+</html>
