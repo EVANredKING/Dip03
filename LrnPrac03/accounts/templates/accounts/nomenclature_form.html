@@ -1,0 +1,84 @@
+<!-- accounts/templates/accounts/nomenclature_form.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма номенклатуры</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body.dark-mode {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .card.dark-mode {
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .btn {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Форма номенклатуры</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_abbreviation">Аббревиатура</label>
+                                <input type="text" name="abbreviation" class="form-control" id="id_abbreviation" value="{{ nomenclature.abbreviation }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_short_name">Наименование краткое</label>
+                                <input type="text" name="short_name" class="form-control" id="id_short_name" value="{{ nomenclature.short_name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_full_name">Наименование полное</label>
+                                <input type="text" name="full_name" class="form-control" id="id_full_name" value="{{ nomenclature.full_name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_internal_code">Внутренний код</label>
+                                <input type="text" name="internal_code" class="form-control" id="id_internal_code" value="{{ nomenclature.internal_code }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_cipher">Шифр</label>
+                                <input type="text" name="cipher" class="form-control" id="id_cipher" value="{{ nomenclature.cipher }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_ekps_code">Код ЕКПС</label>
+                                <input type="text" name="ekps_code" class="form-control" id="id_ekps_code" value="{{ nomenclature.ekps_code }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_kvt_code">Код КВТ</label>
+                                <input type="text" name="kvt_code" class="form-control" id="id_kvt_code" value="{{ nomenclature.kvt_code }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_drawing_number">Чертёжный номер</label>
+                                <input type="text" name="drawing_number" class="form-control" id="id_drawing_number" value="{{ nomenclature.drawing_number }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_nomenclature_type">Вид номенклатуры</label>
+                                <input type="text" name="nomenclature_type" class="form-control" id="id_nomenclature_type" value="{{ nomenclature.nomenclature_type }}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

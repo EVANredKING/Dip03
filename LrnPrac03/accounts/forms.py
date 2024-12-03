@@ -3,6 +3,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from .models import Nomenclature, LSI
 
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=150, label='Имя пользователя')
@@ -40,3 +41,28 @@ class RegisterForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, label='Имя пользователя')
     password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
+
+class NomenclatureForm(forms.ModelForm):
+    class Meta:
+        model = Nomenclature
+        fields = ['abbreviation', 'short_name', 'full_name', 'internal_code', 'cipher', 'ekps_code', 'kvt_code', 'drawing_number', 'nomenclature_type']
+        labels = {
+            'abbreviation': 'Аббревиатура',
+            'short_name': 'Наименование краткое',
+            'full_name': 'Наименование полное',
+            'internal_code': 'Код внутренний',
+            'cipher': 'Шифр',
+            'ekps_code': 'Код ЕКПС',
+            'kvt_code': 'Код КВТ',
+            'drawing_number': 'Чертёжный номер',
+            'nomenclature_type': 'Вид номенклатуры',
+        }
+
+class LSIForm(forms.ModelForm):
+    class Meta:
+        model = LSI
+        fields = ['name', 'description']
+        labels = {
+            'name': 'Название',
+            'description': 'Описание',
+        }
