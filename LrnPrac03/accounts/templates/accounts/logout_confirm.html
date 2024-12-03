@@ -1,0 +1,50 @@
+<!-- accounts/templates/accounts/logout_confirm.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение выхода</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body.dark-mode {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .card.dark-mode {
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .btn {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Подтверждение выхода</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Вы уверены, что хотите выйти из аккаунта?</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Выйти</button>
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Отмена</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

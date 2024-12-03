@@ -34,6 +34,9 @@ def login_view(request):
             return render(request, 'accounts/login.html', {'error': 'Неверное имя пользователя или пароль.'})
     return render(request, 'accounts/login.html')
 
+def logout_confirm(request):
+    return render(request, 'accounts/logout_confirm.html')
+
 def logout_view(request):
     logout(request)
     return redirect('login')
