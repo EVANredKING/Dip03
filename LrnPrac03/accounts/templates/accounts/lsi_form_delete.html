@@ -1,11 +1,11 @@
-<!-- accounts/templates/accounts/login.html -->
+<!-- accounts/templates/accounts/lsi_confirm_delete.html -->
 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход</title>
+    <title>Подтверждение удаления</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body.dark-mode {
@@ -32,27 +32,15 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-center">Вход</h3>
+                        <h3 class="text-center">Подтверждение удаления</h3>
                     </div>
                     <div class="card-body">
+                        <p>Вы уверены, что хотите удалить ЛСИ "{{ lsi.name }}"?</p>
                         <form method="post">
                             {% csrf_token %}
-                            <div class="form-group">
-                                <label for="id_username">Имя пользователя</label>
-                                <input type="text" name="username" class="form-control" id="id_username" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="id_password">Пароль</label>
-                                <input type="password" name="password" class="form-control" id="id_password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Отмена</a>
                         </form>
-                        {% if error %}
-                            <div class="alert alert-danger mt-3">{{ error }}</div>
-                        {% endif %}
-                    </div>
-                    <div class="card-footer text-center">
-                        <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
                     </div>
                 </div>
             </div>

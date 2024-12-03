@@ -55,6 +55,9 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
                         </form>
+                        {% if error %}
+                            <div class="alert alert-danger mt-3">{{ error }}</div>
+                        {% endif %}
                     </div>
                     <div class="card-footer text-center">
                         <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
@@ -63,14 +66,5 @@
             </div>
         </div>
     </div>
-    <button id="theme-toggle" class="btn btn-primary" style="position: fixed; top: 10px; right: 10px;">Переключить тему</button>
-    <script>
-        document.getElementById('theme-toggle').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            document.querySelectorAll('.card').forEach(function(element) {
-                element.classList.toggle('dark-mode');
-            });
-        });
-    </script>
 </body>
 </html>

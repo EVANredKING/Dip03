@@ -1,0 +1,238 @@
+<!-- accounts/templates/accounts/home.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <style>
+        body.dark-mode {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .card.dark-mode {
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .btn {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .navbar {
+            background-color: #007bff;
+            margin-bottom: 20px;
+        }
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #ffffff;
+        }
+        .navbar .nav-link:hover {
+            color: #0056b3;
+        }
+        .welcome-message {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .welcome-message h1 {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .welcome-message p {
+            font-size: 1.2em;
+            font-weight: normal;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-container th, .table-container td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .table-container th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        .table-container th:hover {
+            background-color: #e2e2e2;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">ATC Диспетчер</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="theme-toggle"><i class="fas fa-adjust"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="home-toggle">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="nomenclature-toggle">Номенклатура</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">ЛСИ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-user"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container welcome-message">
+        <h1>Добро пожаловать в ATC Диспетчер</h1>
+        <p>Разработчик: Редькин Иван Александрович ТИП-72</p>
+    </div>
+
+    <div class="container table-container" id="nomenclature-table" style="display: none;">
+        <table class="table table-bordered" id="nomenclature-table">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Аббревиатура</th>
+                    <th onclick="sortTable(1)">Наименование краткое</th>
+                    <th onclick="sortTable(2)">Наименование полное</th>
+                    <th onclick="sortTable(3)">Внутренний код</th>
+                    <th onclick="sortTable(4)">Шифр</th>
+                    <th onclick="sortTable(5)">Код ЕКПС</th>
+                    <th onclick="sortTable(6)">Код КВТ</th>
+                    <th onclick="sortTable(7)">Чертёжный номер</th>
+                    <th onclick="sortTable(8)">Вид номенклатуры</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nomenclature in nomenclatures %}
+                <tr>
+                    <td>{{ nomenclature.abbreviation }}</td>
+                    <td>{{ nomenclature.short_name }}</td>
+                    <td>{{ nomenclature.full_name }}</td>
+                    <td>{{ nomenclature.internal_code }}</td>
+                    <td>{{ nomenclature.cipher }}</td>
+                    <td>{{ nomenclature.ekps_code }}</td>
+                    <td>{{ nomenclature.kvt_code }}</td>
+                    <td>{{ nomenclature.drawing_number }}</td>
+                    <td>{{ nomenclature.nomenclature_type }}</td>
+                    <td>
+                        <a href="{% url 'nomenclature_update' nomenclature.pk %}" class="btn btn-secondary">Редактировать</a>
+                        <a href="{% url 'nomenclature_delete' nomenclature.pk %}" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'nomenclature_create' %}" class="btn btn-primary mt-3">Добавить номенклатуру</a>
+    </div>
+
+    <div class="container table-container" id="lsi-table" style="display: none;">
+        <table class="table table-bordered" id="lsi-table">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lsi in lsis %}
+                <tr>
+                    <td>{{ lsi.name }}</td>
+                    <td>{{ lsi.description }}</td>
+                    <td>
+                        <a href="{% url 'lsi_update' lsi.pk %}" class="btn btn-secondary">Редактировать</a>
+                        <a href="{% url 'lsi_delete' lsi.pk %}" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'lsi_create' %}" class="btn btn-primary mt-3">Добавить ЛСИ</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script>
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelectorAll('.card').forEach(function(element) {
+                element.classList.toggle('dark-mode');
+            });
+        });
+
+        document.getElementById('home-toggle').addEventListener('click', function() {
+            document.querySelectorAll('.table-container').forEach(function(element) {
+                element.style.display = 'none';
+            });
+        });
+
+        document.getElementById('nomenclature-toggle').addEventListener('click', function() {
+            document.getElementById('nomenclature-table').style.display = 'block';
+            document.getElementById('lsi-table').style.display = 'none';
+        });
+
+        document.getElementById('lsi-toggle').addEventListener('click', function() {
+            document.getElementById('lsi-table').style.display = 'block';
+            document.getElementById('nomenclature-table').style.display = 'none';
+        });
+
+        $(document).ready(function() {
+            $('#nomenclature-table').DataTable();
+            $('#lsi-table').DataTable();
+        });
+
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("nomenclature-table");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
