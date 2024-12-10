@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить номенклатуру</title>
+</head>
+<body>
+    <h1>Удалить номенклатуру</h1>
+    <p>Вы уверены, что хотите удалить эту номенклатуру?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="{% url 'nomenclature_list' %}">Отмена</a>
+</body>
+</html>

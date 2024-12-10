@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить ЛСИ</title>
+</head>
+<body>
+    <h1>Удалить ЛСИ</h1>
+    <p>Вы уверены, что хотите удалить этот ЛСИ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="{% url 'lsi_list' %}">Отмена</a>
+</body>
+</html>
